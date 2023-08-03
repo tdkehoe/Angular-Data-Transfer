@@ -8,3 +8,21 @@ This modular structure enables Angular to scale. Us "old guys" who used AngularJ
 
 The headache is that your web app likely has hundreds of components. Data is constantly transferred between components. Transferring data between components isn't simple. Most of your bugs will be in transferring data between components. If you have poor data transfer practices your web app will become unreadable, unmaintainable, and slow. This tutorial will teach you best practices for readable, maintainable, fast-running code.
 
+### Parent and child components
+
+Angular passes data between components via the HTML views. This might seem odd, as data is handled and transformed in the controllers.
+
+The HTML view of a *parent component* includes a link to the HTML view of a *child component*. 
+
+*parent.component.html*
+```html
+ <app-home-toolbar></app-home-toolbar>
+```
+
+Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships.
+
+## The Basics
+
+Angular has four ways to transfer data between components.
+
+* `@Input` transfers data from a parent component to a child component.
