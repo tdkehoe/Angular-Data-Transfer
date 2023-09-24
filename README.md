@@ -50,7 +50,7 @@ In the parent HTML file you write the transfer code in the child component link.
 
 *parent.component.html
 ```html
-  <child-component></child-component>
+  <app-child-component></app-child-component>
 ```
 
 The `@Input` code (to transfer data from the parent component to the child component) is written with square brackets[]. The code is simple, just the child variable name in the square brackets, an equals, and the parent variable name in quotations. The child variable name and the parent variable are usually the same.
