@@ -14,16 +14,16 @@ The headache is that your web app likely has dozens or hundreds of components. D
 
 ### Parent and child components
 
-Angular passes data between components via the HTML views. This might seem odd, as data is handled and transformed in the controllers. Angular makes us forget that the web is ultimately HTML code.
+Angular passes data between components via the HTML files. This might seem odd, as data is handled and transformed in the controllers. Angular makes us forget that the web is ultimately HTML code.
 
-The HTML view of a *parent component* includes a link to the HTML view of a *child component*. 
+The HTML file of a *parent component* includes a link to the *child component*. 
 
 *parent.component.html*
 ```html
  <app-home-toolbar></app-home-toolbar>
 ```
 
-Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships.
+Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships. This relationship is all about links in HTML files.
 
 ## The Basics
 
@@ -34,21 +34,23 @@ Angular has four ways to transfer data between components.
 * The `@ViewChild()` decorator enables a parent component to see a value in a child component.
 * Data can be transferred between unrelated components via services.
 
-### The `@Input` and `@Output()` decorators
+### The `@Input` decorator
 
 The `@Input` and `@Output` decorators are the workhorses of Angular data transfer. Both require code in three files:
 
 * Declare variables in the parent component controller.
-* Write transfer code in the parent HTML view.
+* Write transfer code in the parent HTML file.
 * Use the `@Input` and `@Output` decorators when declaring the variables in the child component controller.
 
-You don't have to do anything special when you declare your variables in the parent component controller.
+You don't have to import anything or do anything special when you declare your variables in the parent component controller.
 
-In the parent HTML view you write the transfer code in the child component link.
+#### `@Input` in the parent HTML file
+
+In the parent HTML file you write the transfer code in the child component link.
 
 *parent.component.html
 ```html
-<app-child-component></app-child-component>
+  <child-component></child-component>
 ```
 
 The `@Input` code (to transfer data from the parent component to the child component) is written with square brackets[]. The code is simple, just the child variable name in the square brackets, an equals, and the parent variable name in quotations. The child variable name and the parent variable are usually the same.
@@ -60,26 +62,51 @@ The `@Input` code (to transfer data from the parent component to the child compo
 </app-child-component>
 ```
 
-The `@Output` code (to transfer data from the child component to the parent component) is written with parentheses(). The code is similar, but the parent side is a function, with `$event` as the parameter. 
+*Tip:* Variable names should start with a lowercase letter. If your data isn't transferring, check that you have lowercase letters starting both sides of this code.
 
-*Caution:* Capitalization counts! Variable names should start with a lowercase letter. Function names should start with an Uppercase letter. `@Input` codes start with lowercase letters on both sides. `@Output` codes start with a lowercase letter on one side and an uppercase letter on the other side. If your data isn't transferring, check that you capitalized these codes correctly.
+*Tip:* If your data isn't transferring between components, check the parent HTML file first. I alphabetize my `@Input` code to make them easier to find.
+
+#### `@Input` in the child component controller
+
+You must import `Input` into the parent component controller.
+
+*parent.component.ts*
+```js
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+```
+
+Then precede the variable declaration with the `@Input()` decorator. (Decorators are functions invoked with the @ symbol that precede a class, method, or property. Variables are properties of a component.)
+
+
+export class ItemDetailComponent {
+  @Input() item = ''; // decorate the property with @Input()
+}
+
+
+### The `@Output()` decorator
+
+The `@Output` code (to transfer data from the child component to the parent component) is written with parentheses(). The code is similar to `@Input` code but the parent (right) side is a function, with `$event` as the parameter. 
+
+*Caution:* Capitalization counts! Variable names should start with a lowercase letter. Function names should start with an Uppercase letter. `@Input` codes start with lowercase letters on both sides. `@Output` codes start with a lowercase letter on one side and an uppercase letter on the other side. If your data isn't transferring between components, check that you capitalized these codes correctly.
 
 *parent.component.html
 ```html
 <app-child-component>
-(myVariable)="MyVariableEvent Handler($event)"
+(myVariable)="MyVariableEventHandler($event)"
+</app-child-component>
+```
+
+The below code will transfer data both ways between the parent and child components.
+
+*parent.component.html
+```html
+<app-child-component>
+(myVariable)="MyVariableEventHandler($event)"
 [myVariable]="myVariable"
 </app-child-component>
 ```
 
-That code will transfer data both ways between the parent and child components.
-
-*Tip:* I put the `@Output` codes above the `@Input` codes. I alphabetize each. As you scale your app you can get thirty, forty, or more of these codes. You need to be able to see these without squinting.
-
-
-
-
-
+*Tip:* If your data isn't transferring between components, check the parent HTML file first. I put the `@Output` codes above the `@Input` codes. I alphabetize each set of codes. As you scale your app you can get thirty, forty, or more of these codes. You must be able to see these codes without squinting.
 
 
 
