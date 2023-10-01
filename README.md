@@ -75,6 +75,15 @@ Lesson learned: minimize your database calls.
 
 I refactored my project again, using `@Input` to share data from parent to child components and `@Output` to share data from child to parent components. This is the `best practices` way to share data between components in Angular but there's plenty of complexity and more than a few pitfalls. This tutorial aims to make this help you aaoid headaches.
 
+## The Basics
+
+Angular has four ways to transfer data between components.
+
+* The `@Input()` decorator transfers data from a parent component to a child component.
+* The `@Output()` decorator transfers data from a child component to a parent component.
+* The `@ViewChild()` decorator enables a parent component to see a value in a child component.
+* Data can be transferred between unrelated components via services. This includes the new Signals method.
+
 ### Parent and child components
 
 Angular passes data between components via the HTML files. This might seem odd, as data is handled and transformed in the controllers. Angular makes us forget that the web is ultimately HTML code.
@@ -87,15 +96,6 @@ The HTML file of a *parent component* includes a link to the *child component*.
 ```
 
 Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships. This relationship is all about links in HTML files.
-
-## The Basics
-
-Angular has four ways to transfer data between components.
-
-* The `@Input()` decorator transfers data from a parent component to a child component.
-* The `@Output()` decorator transfers data from a child component to a parent component.
-* The `@ViewChild()` decorator enables a parent component to see a value in a child component.
-* Data can be transferred between unrelated components via services. This includes the new Signals method.
 
 ### The `@Input` decorator
 
