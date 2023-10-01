@@ -1,16 +1,43 @@
-# Transferring Data Between Angular Components: Best Practices
+# Sharing Data Between Angular Components: Best Practices
 
-Transferring data between Angular components is a headache. 
+Sharing data between Angular components is a headache. 
 
 Angular's strength is its modular structure. Each section of a web page--headers, footers, forms, etc.--is a component. Each component has its own HTML view, controller, CSS, and test files. The components fit together into a seamless view for the user.
 
 (Many Angular developers refer to the controller as the component. I use "component" to mean the four files together. The controller is the logic file. I will try to use the phrase "component controller" as you might be used to hearing the controller referred to as the component.)
 
-This modular structure enables Angular to scale. AngularJS was easy to set up for a small web app, but when the app scaled up the controllers grew to thousands of lines. These controllers were spaghetti code, where tracing the path of a variable was like trying to follow a strand of pasta on your plate. 
+This modular structure enables Angular to scale. I fell in love with AngularJS because it made setting up a small web app so easy. I stopped loving AngularJS when my project scaled up and the controllers grew to thousands of lines. These controllers were spaghetti code, where tracing the path of a variable was like trying to follow a strand of pasta on your plate. 
 
-In contrast, Angular's modular structure keeps controllers to typically a few hundred lines. Tracing a variable is generally straightforward as we can see a variable's value when it enters the component, how it changes in the component, and the value when it is sent to a another component.
+In contrast, Angular's modular structure keeps controllers to a few hundred lines. Tracing a variable is straightforward as we can see a variable's value when it enters the component, how it changes in the component, and the value when it is sent to a another component.
 
-The headache is that your web app likely has dozens or hundreds of components. Data is constantly transferring between components. Transferring data between components isn't simple. Most of your bugs will be in transferring data between components. If you have poor data transfer practices your web app will become unreadable, unmaintainable, and slow. This tutorial will teach you best practices for readable, maintainable, fast code.
+The headache is that a large web app has dozens or hundreds of components. Data is constantly shared between components. Sharing data between components isn't simple. Most of your bugs will be in sharing data between components. If you have poor data sharing practices your web app will become unreadable, unmaintainable, and slow. This tutorial will teach you best practices for readable, maintainable, fast code.
+
+## My Story...
+
+I read the [Angular documentation](https://angular.io/guide/inputs-outputs) about the four ways to share data between components. Using a service sounded like the best choice. Service can share data from parent to child components, from child to parent components, or between unrelated components. Plus, in AngularJS the only way to share data between controllers was via services, so I was familiar with this method.
+
+I built a service for sharing data between components. As I built my project I added getter/setters for variables as needed. This grew to hundreds of getter/setter code blocks.
+
+*share-data.service.ts*
+```js
+private sentenceTranslation = new Subject<string | null>();
+setSentenceTranslation(sentenceTranslation: string | null) {
+    this.sentenceTranslation.next(sentenceTranslation);
+}
+  getSentenceTranslation() {
+    return this.sentenceTranslation.asObservable();
+}
+```
+
+Setting the data wasn't difficult. I just called the service from a component controller:
+
+*my-component.component.ts*
+```
+
+```
+
+
+
 
 ### Parent and child components
 
