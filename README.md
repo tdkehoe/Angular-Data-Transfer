@@ -140,11 +140,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 Then precede the variable declaration with the `@Input()` decorator. (Decorators are functions invoked with the @ symbol that precede a class, method, or property. Variables are properties of a component.)
 
-
+```js
 export class ItemDetailComponent {
   @Input() item = ''; // decorate the property with @Input()
 }
-
+```
 
 ### The `@Output()` decorator
 
