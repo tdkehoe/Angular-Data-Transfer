@@ -4,7 +4,7 @@ Transferring data between Angular components is a headache.
 
 Angular's strength is its modular structure. Each section of a web page--headers, footers, forms, etc.--is a component. Each component has its own HTML view, controller, CSS, and test files. The components fit together into a seamless view for the user.
 
-(Many Angular developers refer to the controller as the component. I use "component" to mean the four files together. The controller is the logic file. I will try to use the phrase "component controller" as you might be used hearing the controller referred to as the component.)
+(Many Angular developers refer to the controller as the component. I use "component" to mean the four files together. The controller is the logic file. I will try to use the phrase "component controller" as you might be used to hearing the controller referred to as the component.)
 
 This modular structure enables Angular to scale. AngularJS was easy to set up for a small web app, but when the app scaled up the controllers grew to thousands of lines. These controllers were spaghetti code, where tracing the path of a variable was like trying to follow a strand of pasta on your plate. 
 
