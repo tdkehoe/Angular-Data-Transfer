@@ -8,11 +8,24 @@ I stopped loving AngularJS after I graduated and built a large project.  The con
 
 Angular (at first called Angular 2) was released a year later. Angular's strength is its modular structure. In AngularJS, each web page or view had a controller. In Angular, each section of a view--headers, footers, forms, etc.--is a component. Each component has its own HTML view, controller, CSS, and test files. The components fit together into a seamless view for the user.
 
-(Many Angular developers refer to the controller as the component. I use "component" to mean the four files together. The controller is the logic file. I will try to use the phrase "component controller" as you might be used to hearing the controller referred to as the component.)
-
 Angular's modular structure keeps controllers to a few hundred lines. Tracing a variable is straightforward as we can see a variable's value when it enters the component, how it changes in the component, and the value when it is sent to a another component.
 
 The headache is that a large web app has dozens or hundreds of components. Data is shared between components. Sharing data between components isn't simple. Most of your bugs will be in sharing data between components. If you have poor data sharing practices your web app will become unreadable, unmaintainable, and slow. This tutorial will teach you best practices for readable, maintainable, fast code.
+
+### Nomenclature
+
+Angular is built with components. A component has four files. What are these files called? Following the [Angular documentation](https://angular.io/guide/component-overview):
+
+*An HTML template
+*A TypeScript class
+*A CSS stylesheet
+*A TypeScript test file
+
+Following the [model-view-controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (MVC) nomenclature, the HTML template is the "view" and the TypeScript class is the "controller".
+
+What's incorrect is calling the TypeScript class the "component". The "component" is the four files together.
+
+At the expense of verbosity I'll choose clarity and call the first file the "HTML view template" and the second file the "TypeScript class controller".
 
 ## My Story...First, Sharing Data Via Services
 
@@ -50,7 +63,7 @@ Things can go wrong with this data sharing structure.
 
 The Observable can only be in `ngOnInit()`. It gets the value at page load and then the Observable changes the local value whenever the data in the service changes. This should work with synchronous data but it's a disaster with async data such as database calls. You never know whether the local data is the current value in the database or a previous value.
 
-Even with synchronous data, tracing bugs was a nightmare. If more than one component can set the data with `this.shareDataService.setShowForm(this.showForm);`, and you have anomolous data showing up in the observing component, then you have to figure out which component is setting the buggy data. 
+Even with synchronous data, tracing bugs was a nightmare. If more than one component can set the data with `this.shareDataService.setShowForm(this.showForm);`, and you have anomolous data showing up in the observing component, then you have to figure out which component is setting the buggy data. Later I'll give a tip that makes this easier.
 
 In the component that consumes the data, several functions might change the local variable.
 
@@ -97,26 +110,26 @@ The HTML file of a *parent component* includes a link to the *child component*.
 
 Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships. This relationship is all about links in HTML files.
 
-### The `@Input` decorator
+### The `@Input()` decorator
 
-The `@Input` and `@Output` decorators are the workhorses of Angular data transfer. Both require code in three files:
+The `@Input()` and `@Output()` decorators are the workhorses of Angular data transfer. Both require code in three files:
 
 * Declare variables in the parent component controller.
-* Write transfer code in the parent HTML file.
-* Use the `@Input` and `@Output` decorators when declaring the variables in the child component controller.
+* Write transfer code in the parent HTML view.
+* Use the `@Input()` and `@Output()` decorators when declaring the variables in the child component controller.
 
 You don't have to import anything or do anything special when you declare your variables in the parent component controller.
 
-#### `@Input` in the parent HTML file
+#### `@Input()` in the parent HTML view
 
-In the parent HTML file you write the transfer code in the child component link.
+In the parent HTML view you write the transfer code in the child component link.
 
 *parent.component.html*
 ```html
   <app-child-component></app-child-component>
 ```
 
-The `@Input` code (to transfer data from the parent component to the child component) is written with square brackets[]. The code is simple, just the child variable name in the square brackets, an equals, and the parent variable name in quotations. The child variable name and the parent variable are usually the same.
+The `@Input()` code (to transfer data from the parent component to the child component) is written with square brackets[]. The code is simple, just the child variable name in the square brackets, an equals, and the parent variable name in quotations. The child variable name and the parent variable are usually the same.
 
 *parent.component.html*
 ```html
@@ -129,9 +142,9 @@ The `@Input` code (to transfer data from the parent component to the child compo
 
 *Tip:* If your data isn't transferring between components, check the parent HTML file first. I alphabetize my `@Input` code to make them easier to find.
 
-#### `@Input` in the child component controller
+#### `@Input()` in the child component controller
 
-You must import `Input` into the child component controller.
+Import `Input` into the child component controller.
 
 *child.component.ts*
 ```js
@@ -143,15 +156,21 @@ Then precede the variable declaration with the `@Input()` decorator. (Decorators
 *child.component.ts*
 ```js
 export class ItemDetailComponent {
-  @Input() item = ''; // decorate the property with @Input()
+  @Input() myVariable: boolean = false;
 }
 ```
 
-### `@Output` in the parent HTML file
+#### Testing the `@Input()` decorator
 
-The `@Output` decorator is used to transfer data from the child component to the parent component.  It is written with parentheses() in the parent HTML view. The code is similar to `@Input` code but the parent (right) side is a function, with `$event` as the parameter. 
 
-*Caution:* Capitalization counts! Variable names should start with a lowercase letter. Function names should start with an Uppercase letter. `@Input` codes start with lowercase letters on both sides. `@Output` codes start with a lowercase letter on one side and an uppercase letter on the other side. If your data isn't transferring between components, check that you capitalized these codes correctly.
+### The `@Output()` decorator
+
+The `@Output()` decorator is used to transfer data from the child component to the parent component.
+
+#### `@Output()` in the parent HTML view
+The `@Output()` decorator is written with parentheses() in the parent HTML view. The code is similar to `@Input()` code but the parent (right) side is a function, with `$event` as the parameter. 
+
+*Caution:* Capitalization counts! Variable names should start with a lowercase letter. Function names should start with an Uppercase letter. `@Input()` HTML connections start with lowercase letters on both sides. `@Output()` HTML connections start with a lowercase letter on one side and an uppercase letter on the other side. If your data isn't transferring between components, check that you capitalized these codes correctly.
 
 *parent.component.html*
 ```html
@@ -170,7 +189,44 @@ The below code will transfer data both ways between the parent and child compone
 </app-child-component>
 ```
 
-*Tip:* If your data isn't transferring between components, check the parent HTML view first. I put the `@Output` codes above the `@Input` codes. I alphabetize each set of codes. As you scale your app you can get thirty, forty, or more of these codes. You must be able to see these codes without squinting.
+*Tip:* If your data isn't transferring between components, check the parent HTML view first. I put the `@Output()` codes above the `@Input()` codes. I alphabetize each set of codes. As you scale your app you can get thirty, forty, or more of these codes. You must be able to see these codes without squinting.
+
+#### `@Output()` in the child component controller
+
+Import `EventEmitter` and `Output` into the child component controller.
+
+*child.component.ts*
+```js
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+```
+
+Then precede the variable declaration with the `@Output()` decorator.
+
+*child.component.ts*
+```js
+export class ItemDetailComponent {
+  @Output() myVariableEvent: EventEmitter<boolean> = new EventEmitter();
+}
+```
+
+This syntax isn't a simple variable declaration as we had with `@Input()`. Instead of `myVariable1` we declare `myVariableEvent`. Then the value we assign this variable is a [EventEmitter](https://angular.io/api/core/EventEmitter).
+
+`EventEmitter` is used only in `@Output()` directives. It extends [RxJS Subject](https://rxjs.dev/api/index/class/Subject) for Angular.
+
+Now you can emit events when data changes.
+
+*child.component.ts*
+```js
+  async goToNextWord(): Promise<void> {
+    this.myVariableEvent.emit(false);
+```
+
+This will emit `false` to the parent HTML view, which shares this data with the parent component controller.
+
+#### `@Output()` in the parent component controller
 
 
 
+
+
+#### Testing the `@Output()` decorator
