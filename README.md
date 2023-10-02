@@ -153,7 +153,7 @@ The `@Output` decorator is used to transfer data from the child component to the
 
 *Caution:* Capitalization counts! Variable names should start with a lowercase letter. Function names should start with an Uppercase letter. `@Input` codes start with lowercase letters on both sides. `@Output` codes start with a lowercase letter on one side and an uppercase letter on the other side. If your data isn't transferring between components, check that you capitalized these codes correctly.
 
-*parent.component.html
+*parent.component.html*
 ```html
 <app-child-component>
    (myVariable)="MyVariableEventHandler($event)"
@@ -162,7 +162,7 @@ The `@Output` decorator is used to transfer data from the child component to the
 
 The below code will transfer data both ways between the parent and child components.
 
-*parent.component.html
+*parent.component.html*
 ```html
 <app-child-component>
    (myVariable)="MyVariableEventHandler($event)"
