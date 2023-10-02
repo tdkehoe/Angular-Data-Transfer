@@ -171,6 +171,26 @@ Display the value in the HTML view template:
 </p>
 ```
 
+#### Trigger actions in the child TypeScript class controller when `@Input()` changes
+
+Use `OnChanges()` in the child component to trigger actions when the a value in the parent component changes.
+
+*child.component.ts*
+```js
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+
+export class ChildComponent implements OnChanges {
+  ngOnChanges() {
+    if (changes['myVariable']) {
+      this.myFunction(myVariable);
+    }
+  }
+}
+```
+
+
+
+
 #### Testing `@Input()`
 
 #### What could possibly go wrong with `@Input()`?
