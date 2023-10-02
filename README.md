@@ -160,6 +160,17 @@ export class ItemDetailComponent {
 }
 ```
 
+#### `@Input()` in the child HTML view template
+
+Display the value in the HTML view template:
+
+*child.component.html*
+```html
+<p>
+  The current value is: {{myVariable}}
+</p>
+```
+
 #### Testing `@Input()`
 
 #### What could possibly go wrong with `@Input()`?
