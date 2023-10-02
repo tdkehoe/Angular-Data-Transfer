@@ -43,7 +43,7 @@ I built a service for sharing data between components. As I built my project I a
   }
 ```
 
-Setting the data wasn't difficult. I just called the service from a component controller:
+Setting the data wasn't difficult. I just called the service from a TypeScript class controller:
 
 *my-component.component.ts*
 ```js
@@ -114,11 +114,11 @@ Where the components are in the directory structure of the Angular project has n
 
 The `@Input()` and `@Output()` decorators are the workhorses of Angular data transfer. Both require code in three files:
 
-* Declare variables in the parent component controller.
+* Declare variables in the parent TypeScript class controller.
 * Write transfer code in the parent HTML view.
-* Use the `@Input()` and `@Output()` decorators when declaring the variables in the child component controller.
+* Use the `@Input()` and `@Output()` decorators when declaring the variables in the child TypeScript class controller.
 
-You don't have to import anything or do anything special when you declare your variables in the parent component controller.
+You don't have to import anything or do anything special when you declare your variables in the parent TypeScript class controller.
 
 #### `@Input()` in the parent HTML view
 
@@ -142,9 +142,9 @@ The `@Input()` code (to transfer data from the parent component to the child com
 
 *Tip:* If your data isn't transferring between components, check the parent HTML file first. I alphabetize my `@Input` code to make them easier to find.
 
-#### `@Input()` in the child component controller
+#### `@Input()` in the child TypeScript class controller
 
-Import `Input` into the child component controller.
+Import `Input` into the child TypeScript class controller.
 
 *child.component.ts*
 ```js
@@ -191,9 +191,9 @@ The below code will transfer data both ways between the parent and child compone
 
 *Tip:* If your data isn't transferring between components, check the parent HTML view first. I put the `@Output()` codes above the `@Input()` codes. I alphabetize each set of codes. As you scale your app you can get thirty, forty, or more of these codes. You must be able to see these codes without squinting.
 
-#### `@Output()` in the child component controller
+#### `@Output()` in the child TypeScript class controller
 
-Import `EventEmitter` and `Output` into the child component controller.
+Import `EventEmitter` and `Output` into the child TypeScript class controller.
 
 *child.component.ts*
 ```js
@@ -221,9 +221,9 @@ Now you can emit events when data changes.
     this.myVariableEvent.emit(false);
 ```
 
-This will emit `false` to the parent HTML view, which shares this data with the parent component controller.
+This will emit `false` to the parent HTML view, which shares this data with the parent TypeScript class controller.
 
-#### `@Output()` in the parent component controller
+#### `@Output()` in the parent TypeScript class controller
 
 
 
