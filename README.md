@@ -160,8 +160,17 @@ export class ItemDetailComponent {
 }
 ```
 
-#### Testing the `@Input()` decorator
+#### Testing `@Input()`
 
+#### What could possibly go wrong with `@Input()`?
+
+In a word, objects. 
+
+`@Input()` will detect changes in [TypeScript primitives](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html): *string*, *number*, *boolean*, *bigint*, and *symbol*.
+
+That leaves *array*, *any*, *functions*, *objects*, *unions*, *interfaces*, *null*, and *undefined*.
+
+`@Input()` will not detect changes in values in objects. This is because Angular's "dirty checking" looks at the structure of objects, not the values. The structure doesn't change so `@Input()` doesn't pass the value. Fix this by making a new object whenever a value changes.
 
 ### The `@Output()` decorator
 
@@ -204,7 +213,7 @@ Then precede the variable declaration with the `@Output()` decorator.
 
 *child.component.ts*
 ```js
-export class ItemDetailComponent {
+export class DaughterComponent {
   @Output() myVariableEvent: EventEmitter<boolean> = new EventEmitter();
 }
 ```
@@ -225,8 +234,17 @@ This will emit `false` to the parent HTML view template, which shares this data 
 
 #### `@Output()` in the parent TypeScript class controller
 
+In the parent TypeScript class controller, 
 
+*parent.component.ts*
+```js
+  myVariableEventHandler(myVar: boolean) {
+    this.myVariable = myVar;
+  };
+```
 
-
+This will listen for emitted events from the child component and put the data on a local variable.
 
 #### Testing the `@Output()` decorator
+
+
