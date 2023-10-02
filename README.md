@@ -251,9 +251,11 @@ Then precede the variable declaration with the `@Output()` decorator.
 *child.component.ts*
 ```js
 export class DaughterComponent {
-  @Output() myVariableEvent: EventEmitter<boolean> = new EventEmitter();
+  @Output() myVariableEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 }
 ```
+
+You don't need to declare the type on both sides of the assignment operator. The right side is sufficient.
 
 This syntax isn't a simple variable declaration as we had with `@Input()`. Instead of `myVariable1` we declare `myVariableEvent`. Then the value we assign this variable is a [EventEmitter](https://angular.io/api/core/EventEmitter).
 
@@ -263,11 +265,23 @@ Now you can emit events when data changes.
 
 *child.component.ts*
 ```js
-  async goToNextWord(): Promise<void> {
+async goToNextWord(): Promise<void> {
     this.myVariableEvent.emit(false);
+}
 ```
 
 This will emit `false` to the parent HTML view template, which shares this data with the parent TypeScript class controller.
+
+#### `@Output()` in the child HTML view template
+
+We can make a button with a `(click)` event binding in the child HTML view template that will fire the `@Output()` event in the child TypeScript class controller.
+
+*child.component.html*
+```html
+<label for="item-input">Add an item:</label>
+<input type="text" id="item-input" #newItem>
+<button type="button" (click)="addNewItem(newItem.value)">Add to parent's list</button>
+```
 
 #### `@Output()` in the parent TypeScript class controller
 
