@@ -183,6 +183,12 @@ That leaves *array*, *any*, *functions*, *objects*, *unions*, *interfaces*, *nul
 
 `@Input()` will not detect changes in values in objects. This is because Angular's "dirty checking" looks at the structure of objects, not the values. The structure doesn't change so `@Input()` doesn't pass the value. Fix this by making a new object whenever a value changes.
 
+*child.component.ts*
+```js
+this.myObject.myProperty = true;
+this.myObject = [...new Set(myObject)];
+```
+
 ### The `@Output()` decorator
 
 The `@Output()` decorator is used to transfer data from the child component to the parent component.
