@@ -108,19 +108,21 @@ The HTML file of a *parent component* includes a link to the *child component*.
  <app-home-toolbar></app-home-toolbar>
 ```
 
-Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships. This relationship is all about links in HTML files.
+Where the components are in the directory structure of the Angular project has nothing to do with parent-child relationships. This relationship is only about links in HTML files.
 
-### The `@Input()` decorator
+## The `@Input()` and `@Output()` decorators
 
 The `@Input()` and `@Output()` decorators are the workhorses of Angular data transfer. Both require code in three files:
 
 * Declare variables in the parent TypeScript class controller.
 * Write transfer code in the parent HTML view template.
-* Use the `@Input()` and `@Output()` decorators when declaring the variables in the child TypeScript class controller.
+* Use the `@Input()` and `@Output()` decorators when declaring the variables in the child TypeScript class controllers.
 
-You don't have to import anything or do anything special when you declare your variables in the parent TypeScript class controller.
+And each has more code. The downsides of these methods is that they are complex, especially when you're sending data between sibling components via a parent component. This requires lots of code in multiple places in four (or more) files. You get many opportunites to make a typo.
 
-#### `@Input()` in the parent HTML view template
+Worse, these methods sometimes fail to share values. Below I will explain Angular's "dirty checking" causes these methods to fail and how to fix this. But sometimes a data change in one component fails to show up in a sibling component and I can't find any typo or mistake. I suspect that there are other problems with "dirty checking" that I'm unaware of. Or there's some other hidden "gotcha" that I haven't yet learned.
+
+### `@Input()` in the parent HTML view template
 
 In the parent HTML view template you write the transfer code in the child component link.
 
@@ -142,7 +144,7 @@ The `@Input()` code (to transfer data from the parent component to the child com
 
 *Tip:* If your data isn't transferring between components, check the parent HTML file first. I alphabetize my `@Input` code to make them easier to find.
 
-#### `@Input()` in the child TypeScript class controller
+### `@Input()` in the child TypeScript class controller
 
 Import `Input` into the child TypeScript class controller.
 
@@ -160,7 +162,7 @@ export class ItemDetailComponent {
 }
 ```
 
-#### `@Input()` in the child HTML view template
+### `@Input()` in the child HTML view template
 
 Display the value in the HTML view template:
 
@@ -171,7 +173,7 @@ Display the value in the HTML view template:
 </p>
 ```
 
-#### Trigger actions in the child TypeScript class controller when `@Input()` changes
+### Trigger actions in the child TypeScript class controller when `@Input()` changes
 
 Use `OnChanges()` in the child component to trigger actions when the a value in the parent component changes.
 
@@ -188,12 +190,20 @@ export class ChildComponent implements OnChanges {
 }
 ```
 
+### `@Input()` getter/setter
+
+`@Input()` has an alternate syntax:
+
+*child.component.ts*
+```js
+
+```
 
 
 
-#### Testing `@Input()`
+### Testing `@Input()`
 
-#### What could possibly go wrong with `@Input()`?
+### What could possibly go wrong with `@Input()`?
 
 In a word, objects. 
 
@@ -209,11 +219,11 @@ this.myObject.myProperty = true;
 this.myObject = [...new Set(myObject)];
 ```
 
-### The `@Output()` decorator
+## The `@Output()` decorator
 
 The `@Output()` decorator is used to transfer data from the child component to the parent component.
 
-#### `@Output()` in the parent HTML view template
+### `@Output()` in the parent HTML view template
 The `@Output()` decorator is written with parentheses() in the parent HTML view template. The code is similar to `@Input()` code but the parent (right) side is a function, with `$event` as the parameter. 
 
 *Caution:* Capitalization counts! Variable names should start with a lowercase letter. Function names should start with an Uppercase letter. `@Input()` HTML connections start with lowercase letters on both sides. `@Output()` HTML connections start with a lowercase letter on one side and an uppercase letter on the other side. If your data isn't transferring between components, check that you capitalized these codes correctly.
@@ -237,7 +247,7 @@ The below code will transfer data both ways between the parent and child compone
 
 *Tip:* If your data isn't transferring between components, check the parent HTML view template first. I put the `@Output()` codes above the `@Input()` codes. I alphabetize each set of codes. As you scale your app you can get thirty, forty, or more of these codes. You must be able to see these codes without squinting.
 
-#### `@Output()` in the child TypeScript class controller
+### `@Output()` in the child TypeScript class controller
 
 Import `EventEmitter` and `Output` into the child TypeScript class controller.
 
@@ -272,7 +282,7 @@ async goToNextWord(): Promise<void> {
 
 This will emit `false` to the parent HTML view template, which shares this data with the parent TypeScript class controller.
 
-#### `@Output()` in the child HTML view template
+### `@Output()` in the child HTML view template
 
 We can make a button with a `(click)` event binding in the child HTML view template that will fire the `@Output()` event in the child TypeScript class controller.
 
@@ -283,7 +293,7 @@ We can make a button with a `(click)` event binding in the child HTML view templ
 <button type="button" (click)="addNewItem(newItem.value)">Add to parent's list</button>
 ```
 
-#### `@Output()` in the parent TypeScript class controller
+### `@Output()` in the parent TypeScript class controller
 
 In the parent TypeScript class controller, 
 
@@ -296,6 +306,6 @@ In the parent TypeScript class controller,
 
 This will listen for emitted events from the child component and put the data on a local variable.
 
-#### Testing the `@Output()` decorator
+### Testing the `@Output()` decorator
 
 
