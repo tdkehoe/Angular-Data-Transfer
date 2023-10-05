@@ -23,9 +23,9 @@ Angular is built with components. A component has four files. What are these fil
 
 Following the [model-view-controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (MVC) nomenclature, the HTML template is the "view" and the TypeScript class is the "controller".
 
-What's incorrect is calling the TypeScript class the "component". The "component" is the four files together.
+It's incorrect to call the TypeScript class the "component". The "component" is the four files together.
 
-At the expense of verbosity I'll choose clarity and call the first file the "HTML view template template" and the second file the "TypeScript class controller".
+At the expense of verbosity I'll choose clarity and call the first file the "HTML view template" and the second file the "TypeScript class controller".
 
 ## My Story...First, Sharing Data Via Services
 
