@@ -16,10 +16,10 @@ The headache is that a large web app has dozens or hundreds of components. Data 
 
 Angular is built with components. A component has four files. What are these files called? Following the [Angular documentation](https://angular.io/guide/component-overview):
 
-*An HTML template
-*A TypeScript class
-*A CSS stylesheet
-*A TypeScript test file
+* An HTML template
+* A TypeScript class
+* A CSS stylesheet
+* A TypeScript test file
 
 Following the [model-view-controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (MVC) nomenclature, the HTML template is the "view" and the TypeScript class is the "controller".
 
