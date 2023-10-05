@@ -1,6 +1,6 @@
 # Sharing Data Between Angular Components: Best Practices
 
-This story starts in coding bootcamp in 2015 when I fell in love with AngularJS. AngularJS made setting up a small web app so easy. We had a big final exam in which we had seven hours to set up a CRUD app to specifications. (A CRUD app has a front end that reads and writes to a database in the back end. CRUD is an acronym for the Create, Read, Update, Delete database operations.)
+My story starts in coding bootcamp in 2015 when I fell in love with AngularJS. AngularJS made setting up a small web app so easy. We had a big final exam in which we had seven hours to set up a CRUD app to specifications. (A CRUD app has a front end that reads and writes to a database in the back end. CRUD is an acronym for the Create, Read, Update, Delete database operations.)
 
 We were required to use MongoDB as the database, running in Express on Node on the back end. Everyone else in my class used something called Handlebars to make the data appear in the front end. I used AngularJS. I finished in three and a half hours. My app looked better and had more features than my classmates' work. Only a quarter of the class passed this exam. 
 
