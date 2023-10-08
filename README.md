@@ -225,10 +225,23 @@ export class ChildComponent implements OnChanges {
 
 *child.component.ts*
 ```js
-
+_myVariable: boolean;
+@Input()
+get myVariable(): boolean {
+  return this._myVariable;
+}
+set myVariable(myVariable: boolean) {
+  this._myVariable = myVariable;
+  console.log(myVariable); // optional, logs data when it comes in
+  this.myFunction(myVariable); // optional, executes function when data comes in
+}
 ```
 
+The getter/setter syntax will log data changes when the data comes in, aiding debugging.
 
+The getter/setter syntax also will execute a function when new data comes in.
+
+On the other hand, the getter/setter syntax is complex, slow to write, and hard to read. I have mixed feelings whether to use this syntax habitually, or to only use it when debugging.
 
 ### Testing `@Input()`
 
