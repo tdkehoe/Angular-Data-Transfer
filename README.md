@@ -2,28 +2,28 @@
 
 ## tl;dr
 
-*Use `@Input()` and `@Output()` to share data between sibling components.
-*Use the  `@Input()` getter/setter syntax to enable debugging to check if data is shared.
-*Use Angular Signals in a service to share data between unrelated components.
-*Send data to a service from a component controller function, with the data as parameters in the service function. Don't set up listeners in services to maintain current values of variables, i.e., maintain state.
-*To get data from a service, make a listener in `ngOnInit()`. Don't try to get data from a service in a function.
-*Minimize database calls. Database calls cost time and money.
-*Maintaining state, i.e., updating changes in a value through every component that uses the variable, is a non-trivial problem.
-*When sharing objects between components you must tranform the object to get Angular's "dirty checking" to see that a value has changed in a property.
-*When setting up data sharing between components, set up tracing data changes back to their sources for debugging.
-*Make tests for data sharing paths.
+* Use `@Input()` and `@Output()` to share data between sibling components.
+* Use the  `@Input()` getter/setter syntax to enable debugging to check if data is shared.
+* Use Angular Signals in a service to share data between unrelated components.
+* Send data to a service from a component controller function, with the data as parameters in the service function. Don't set up listeners in services to maintain current values of variables, i.e., maintain state.
+* To get data from a service, make a listener in `ngOnInit()`. Don't try to get data from a service in a function.
+* Minimize database calls. Database calls cost time and money.
+* Maintaining state, i.e., updating changes in a value through every component that uses the variable, is a non-trivial problem.
+* When sharing objects between components you must tranform the object to get Angular's "dirty checking" to see that a value has changed in a property.
+* When setting up data sharing between components, set up tracing data changes back to their sources for debugging.
+* Make tests for data sharing paths.
 
 ## Why Angular data sharing between components is a headache
 
 Let's rephrase each item in the previous section as a negative instead of a positive.
 
-*`@Input()` and `@Output()` are overly complex, require writing too much code, and have too many things that can go wrong, especially with the getter/setter syntax.
-*A function can't get data from a service. You can only listen for a service to broadcast data to listeners.
-*The values in a database should always be the current state, i.e., the canonical values. But maintaining this state slows your app and can be expensive.
-*Different components can have different values for the same variable, i.e., state isn't maintained.
-*`@Input()` and `@Output()` sometimes just don't work. My guess is that Angular's "dirty checking" misses more than changes in objects.
-*Tracing data changes back to their sources isn't built in to Angular and increase coding complexity.
-*Writing tests for data sharing paths isn't simple.
+* `@Input()` and `@Output()` are overly complex, require writing too much code, and have too many things that can go wrong, especially with the getter/setter syntax.
+* A function can't get data from a service. You can only listen for a service to broadcast data to listeners.
+* The values in a database should always be the current state, i.e., the canonical values. But maintaining this state slows your app and can be expensive.
+* Different components can have different values for the same variable, i.e., state isn't maintained.
+* `@Input()` and `@Output()` sometimes just don't work. My guess is that Angular's "dirty checking" misses more than changes in objects.
+* Tracing data changes back to their sources isn't built in to Angular and increase coding complexity.
+* Writing tests for data sharing paths isn't simple.
 
 Sharing data between Angular components is complex, unreliable, difficult to debug and test, and too often results in different components having different values for a shared variable (state isn't maintained). Most bugs are due to problems sharing data between components.
 
