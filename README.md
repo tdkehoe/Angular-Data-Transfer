@@ -3,7 +3,7 @@
 ## tl;dr
 
 * Use `@Input()` and `@Output()` to share data between sibling components.
-* Use the  `@Input()` getter/setter syntax to enable debugging to check if data is shared.
+* Use the  `@Input()` getter/setter syntax to enable debugging and check if data is shared.
 * Use Angular Signals in a service to share data between unrelated components.
 * Send data to a service from a component controller function, with the data as parameters in the service function. Don't set up listeners in services to maintain current values of variables, i.e., maintain state.
 * To get data from a service, make a listener in `ngOnInit()`. Don't try to get data from a service in a function.
