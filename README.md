@@ -202,9 +202,9 @@ Display the value in the HTML view template:
 </p>
 ```
 
-### Trigger actions in the child TypeScript class controller when `@Input()` changes
+### Execute a function when `@Input()` changes
 
-Use `OnChanges()` in the child component to trigger actions when the a value in the parent component changes.
+Use `OnChanges()` in the child component to trigger actions when the value in the parent component changes.
 
 *child.component.ts*
 ```js
@@ -218,6 +218,8 @@ export class ChildComponent implements OnChanges {
   }
 }
 ```
+
+
 
 ### `@Input()` getter/setter
 
@@ -239,7 +241,7 @@ set myVariable(myVariable: boolean) {
 
 The getter/setter syntax will log data changes when the data comes in, aiding debugging.
 
-The getter/setter syntax also will execute a function when new data comes in.
+The getter/setter syntax also will execute a function when new data comes in. Just like the previous section.
 
 On the other hand, the getter/setter syntax is complex, slow to write, and hard to read. I have mixed feelings whether to use this syntax habitually, or to only use it when debugging.
 
